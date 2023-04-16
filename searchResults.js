@@ -2,69 +2,17 @@ var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
 var searchFormEl = document.querySelector('#search-form');
 
-function getParams() {
-  // Get the search params out of the URL (i.e. `?q=london&format=photo`) and convert it to an array (i.e. ['?q=london', 'format=photo'])
-  // var searchParamsArr = document.location.search.split('&');
+searchFormEl.addEventListener('submit', function (event) {
+  event.preventDefault();
 
-  // Get the query and format values
-  var query = searchParamsArr[0].split('=').pop();
-  // var format = searchParamsArr[1].split('=').pop();
+  var searchInputVal = document.querySelector('#search-input').value;
 
-  searchApi(query);
-}
-
-function printResults(resultObj) {
-  console.log(resultObj);
-
-  // set up `<div>` to hold result content
-  var resultCard = document.createElement('div');
-  resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
-
-  var resultBody = document.createElement('div');
-  resultBody.classList.add('card-body');
-  resultCard.append(resultBody);
-
-  var titleEl = document.createElement('h3');
-  titleEl.textContent = resultObj.title;
-
-  var bodyContentEl = document.createElement('p');
-  bodyContentEl.innerHTML =
-    '<strong>Date:</strong> ' + resultObj.date + '<br/>';
-
-  if (resultObj.subject) {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> ' + resultObj.subject.join(', ') + '<br/>';
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Subjects:</strong> No subject for this entry.';
+  if (!searchInputVal) {
+    console.error('You need a search input value!');
+    return;
   }
 
-  if (resultObj.description) {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong> ' + resultObj.description[0];
-  } else {
-    bodyContentEl.innerHTML +=
-      '<strong>Description:</strong>  No description for this entry.';
-  }
-
-  var linkButtonEl = document.createElement('a');
-  linkButtonEl.textContent = 'Read More';
-  linkButtonEl.setAttribute('href', resultObj.url);
-  linkButtonEl.classList.add('btn', 'btn-dark');
-
-  resultBody.append(titleEl, bodyContentEl, linkButtonEl);
-
-  resultContentEl.append(resultCard);
-}
-
-function searchApi(query, format) {
-  var locQueryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + query + '&appid=8bfd53837493b8bbb4ace442550cacf8';
-
-  if (format) {
-    locQueryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + format + '&appid=8bfd53837493b8bbb4ace442550cacf8';
-  }
-
-  locQueryUrl = locQueryUrl + '&q=' + query;
+  var locQueryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchInputVal + '&appid=8bfd53837493b8bbb4ace442550cacf8';
 
   fetch(locQueryUrl)
     .then(function (response) {
@@ -74,41 +22,102 @@ function searchApi(query, format) {
 
       return response.json();
     })
-    .then(function (locRes) {
-      // write query to page so user knows what they are viewing
-      resultTextEl.textContent = locRes.search.query;
-
-      console.log(locRes);
-
-      if (!locRes.results.length) {
-        console.log('No results found!');
-        resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
-      } else {
-        resultContentEl.textContent = '';
-        for (var i = 0; i < locRes.results.length; i++) {
-          printResults(locRes.results[i]);
-        }
-      }
+    .then(function (data) {
+      console.log(data);
     })
     .catch(function (error) {
       console.error(error);
     });
-}
+});
 
-function handleSearchFormSubmit(event) {
-  event.preventDefault();
 
-  var searchInputVal = document.querySelector('#search-input').value;
-  var formatInputVal = document.querySelector('#format-input').value;
+// function printResults(resultObj) {
+//   console.log(resultObj);
 
-  if (!searchInputVal) {
-    console.error('You need a search input value!');
-    return;
-  }
+//   // set up `<div>` to hold result content
+//   var resultCard = document.createElement('div');
+//   resultCard.classList.add('card', 'bg-light', 'text-dark', 'mb-3', 'p-3');
 
-  searchApi(searchInputVal, formatInputVal);
-}
+//   var resultBody = document.createElement('div');
+//   resultBody.classList.add('card-body');
+//   resultCard.append(resultBody);
 
-searchFormEl.addEventListener('submit', handleSearchFormSubmit);
+//   var titleEl = document.createElement('h3');
+//   titleEl.textContent = resultObj.title;
 
-getParams();
+//   var bodyContentEl = document.createElement('p');
+//   bodyContentEl.innerHTML =
+//     '<strong>Date:</strong> ' + resultObj.date + '<br/>';
+
+//   if (resultObj.subject) {
+//     bodyContentEl.innerHTML +=
+//       '<strong>Subjects:</strong> ' + resultObj.subject.join(', ') + '<br/>';
+//   } else {
+//     bodyContentEl.innerHTML +=
+//       '<strong>Subjects:</strong> No subject for this entry.';
+//   }
+
+//   if (resultObj.description) {
+//     bodyContentEl.innerHTML +=
+//       '<strong>Description:</strong> ' + resultObj.description[0];
+//   } else {
+//     bodyContentEl.innerHTML +=
+//       '<strong>Description:</strong>  No description for this entry.';
+//   }
+
+//   var linkButtonEl = document.createElement('a');
+//   linkButtonEl.textContent = 'Read More';
+//   linkButtonEl.setAttribute('href', resultObj.url);
+//   linkButtonEl.classList.add('btn', 'btn-dark');
+
+//   resultBody.append(titleEl, bodyContentEl, linkButtonEl);
+
+//   resultContentEl.append(resultCard);
+// }
+
+// //=================================================
+
+// function handleSearchFormSubmit(event) {
+//   event.preventDefault();
+
+//   var searchInputVal = document.querySelector('#search-input').value;
+
+//   if (!searchInputVal) {
+//     console.error('You need a search input value!');
+//     return;
+//   }
+
+//   let locQueryUrl = 'https://api.openweathermap.org/data/2.5/weather?q=' + searchInputVal + '&appid=8bfd53837493b8bbb4ace442550cacf8';
+
+//   fetch(locQueryUrl)
+//     .then(function (response) {
+//       if (!response.ok) {
+//         throw response.json();
+//       }
+
+//       return response.json();
+//     })
+//     .then(function (locRes) {
+//       // write query to page so user knows what they are viewing
+//       resultTextEl.textContent = searchInputVal;
+
+//       console.log(locRes);
+
+//       if (!locRes.results.length) {
+//         console.log('No results found!');
+//         resultContentEl.innerHTML = '<h3>No results found, search again!</h3>';
+//       } else {
+//         resultContentEl.textContent = '';
+//         for (var i = 0; i < locRes.results.length; i++) {
+//           printResults(locRes.results[i]);
+//         }
+//       }
+//     })
+//     .catch(function (error) {
+//       console.error(error);
+//     });
+// }
+// var searchButtonEl = document.querySelector('#search-button');
+// searchButtonEl.addEventListener('click', handleSearchFormSubmit);
+
+// getParams();
