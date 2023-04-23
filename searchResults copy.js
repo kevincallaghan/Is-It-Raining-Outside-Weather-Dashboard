@@ -1,3 +1,5 @@
+//!This is copy-paste of class mini-project for quick reference - will be deleted later
+
 var resultTextEl = document.querySelector('#result-text');
 var resultContentEl = document.querySelector('#result-content');
 var searchFormEl = document.querySelector('#search-form');
