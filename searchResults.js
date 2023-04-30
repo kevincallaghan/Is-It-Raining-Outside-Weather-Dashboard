@@ -28,14 +28,13 @@ function getApi(queryUrl) {
       console.log('------ Data for City API ------');
       console.log(data);
       processWeatherData(data);
-    });
+    })
 }
 
 getApi(queryUrl);
 
 function processWeatherData(response) {
 
-  var location = response.resolvedAddress;
   var latitude = response.coord.lat;
   var longitude = response.coord.lon;
   //save lat and lon to local storage
@@ -69,7 +68,7 @@ function processWeatherData(response) {
       //! DISPLAY THE WEATHER
 
     function displayWeatherData(latLonData) {
-      console.log('------ test accessing latLonData.city.name inside displayWeatherData ------');
+      console.log('------ Accessing latLonData.city.name inside displayWeatherData ------');
       console.log(latLonData.city.name);
       const cityName = latLonData.city.name;
       const weatherList = latLonData.list;
@@ -79,6 +78,21 @@ function processWeatherData(response) {
       weatherContainer.innerHTML = "";
       //Add city name to the "Title" on html
       document.getElementById("resultCityTitle").textContent = cityName;
+
+      //Add City Link to the page
+      //! Not Working Correctly
+      //TODO Fix this feature in the future
+      function addCityLink(cityName) {
+        const cityList = document.getElementById("city-list");
+        const cityLink = document.createElement("a");
+        cityLink.textContent = cityName;
+        cityLink.setAttribute("href", "#");
+        const cityItem = document.createElement("li");
+        cityItem.appendChild(cityLink);
+        cityList.appendChild(cityItem);
+        cityLink.classList.add("text-white");
+      }
+      addCityLink(cityName);
 
       // Display weather data for the next 5 days
       for (let i = 0; i < 5; i++) {
@@ -132,13 +146,11 @@ function processWeatherData(response) {
       }
     }
       //! DISPLAY THE WEATHER END
-
   }
   getSecondApi(secondQueryUrl);
-};
+}; 
 
-// Search form on results page
-
+// Search form on results page (copied from index.html)
 var searchFormEl = document.querySelector('#search-form');
 
 function handleSearchFormSubmit(event) {
@@ -160,4 +172,3 @@ function handleSearchFormSubmit(event) {
 
 searchFormEl.addEventListener('submit', handleSearchFormSubmit);
 
-//TODO FIGURE OUT HOW TO SAVE PREVIOUS SEARCHES
