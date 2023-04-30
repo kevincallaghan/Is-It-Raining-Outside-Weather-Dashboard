@@ -7,14 +7,6 @@ const city = localStorage.getItem("searchInputVal");
 // Build the fetch URL using the API key and city
 const queryUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&contentType=json`;
 
-// HTML elements for displaying my weather data on the searchResults page
-const cityNameEl = document.getElementById('city-name');
-const dateEls = document.querySelectorAll('.date');
-const iconEls = document.querySelectorAll('.icon');
-const tempEls = document.querySelectorAll('.temp');
-const humidityEls = document.querySelectorAll('.humidity');
-const windEls = document.querySelectorAll('.wind');
-
 //Using fetch method from class assignment 06-14
 function getApi(queryUrl) {
   fetch(queryUrl)
