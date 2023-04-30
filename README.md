@@ -31,6 +31,17 @@ To add a screenshot, create an `assets/images` folder in your repository and upl
 
 ## Credits
 
+1. Here is the OpenWeatherMap API Documentation I used to make the API's and find current weather by city: https://openweathermap.org/current
+
+2. After getting the lat and lon from the first API, here is the documentation I used for the second API: https://openweathermap.org/forecast5 
+
+3. I used documentation for a different weather API to get source code and plug in my query and API Key and then return the data I need.  Here is the documentation I used: https://www.visualcrossing.com/resources/documentation/weather-api/how-to-load-weather-data-in-javascript/ 
+
+4. I used this Stack Overflow article as a reminder on storing and accessing local storage: https://stackoverflow.com/questions/52505323/save-input-value-to-local-storage-and-retrieve-it-on-a-different-page 
+
+5. 
+
+6. 
 
 
 ## License

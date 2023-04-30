@@ -8,3 +8,7 @@ body {
 .form-container {
   min-height: 100vh;
 }
+
+.weather-container {
+  /* width: 200px; */
+}
