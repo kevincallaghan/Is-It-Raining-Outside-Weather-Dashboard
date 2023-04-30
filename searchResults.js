@@ -95,7 +95,7 @@ function processWeatherData(response) {
       addCityLink(cityName);
 
       // Display weather data for the next 5 days
-      for (let i = 0; i < 5; i++) {
+      for (let i = 0; i <= 5; i++) {
         const weather = weatherList[i];
         const weatherDiv = document.createElement("div");
         weatherDiv.classList.add("weather-container", "mx-auto", "p-3", "m-3", "text-center", "border", "border-dark", "rounded");
